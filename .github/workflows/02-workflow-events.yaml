@@ -2,7 +2,8 @@
 
 name: 02 - workflow events
 
-on: push:
+on:
+  push:
     branches:
       - main
 
