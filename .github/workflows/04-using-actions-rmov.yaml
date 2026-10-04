@@ -1,10 +1,5 @@
 name: 04-Using-Actions-RMov
-on:
-  push:
-    branches:
-      - main
-      - 'feat/**'
-  workflow_dispatch:
+on:  workflow_dispatch
 
 jobs:
   build:
