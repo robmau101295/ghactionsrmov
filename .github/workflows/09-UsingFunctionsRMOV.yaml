@@ -1,0 +1,25 @@
+name: 09 - Using Functions
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  echo1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Failing step
+        run: exit 1
+
+      - name: I will be skipped
+        if: failure()
+        run: echo "Me imprimo porque el estep anterior fallo"
+      
+      - name: I will execute
+        if: ${{ !cancelled() }}
+        run: echo "Me imporimo siempre que el workfloe no se cancele"
+
+      - name: I will execute when cancelled
+        if: cancelled()
+        run: echo "Me imprimo solo si el workflow fue cancelado"
+      
