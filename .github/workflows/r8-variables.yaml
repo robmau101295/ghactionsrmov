@@ -31,6 +31,8 @@ env:
 
 jobs:
   build:
+    env:
+      AMBIENTE: "qa"
     runs-on: ubuntu-latest
     steps:
       - name: "imprimir APP_NAME y AMBIENTE"
@@ -38,10 +40,12 @@ jobs:
           echo "APP_NAME: $APP_NAME"
           echo "AMBIENTE: $AMBIENTE"
       
-      - name: "AMBIENTE=prod a nivel step"  
+      - name: "AMBIENTE=prod a nivel step" 
+        env:
+          AMBIENTE: "prod" 
         run: |
-         echo "AMBIENTE=prod" >> "$GITHUB_ENV"
-         echo "AMBIENTE: $AMBIENTE"
+          echo "APP_NAME: $APP_NAME"
+          echo "AMBIENTE: $AMBIENTE"
       
       - name: "IMAGE_TAG = sha corto (7) -> disponible para siguientes"
         run: |
