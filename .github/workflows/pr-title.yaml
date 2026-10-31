@@ -1,0 +1,33 @@
+# ============================================================
+# R02-extra - Validar título del PR (Conventional Commits)
+# ------------------------------------------------------------
+#  [ ] Nombre: "PR Title"
+#  [ ] pull_request hacia main: opened, edited, synchronize
+#  [ ] Job "validar" con amannn/action-semantic-pull-request@v5
+#  [ ] Permiso mínimo: leer pull requests
+#
+# Lo lograste si: título malo = rojo, lo editas = verde sin push
+# ============================================================
+
+name: "PR Title"
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+    branches:
+      - main
+
+permissions:
+  pull-requests: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validar título del PR
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

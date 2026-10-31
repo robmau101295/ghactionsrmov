@@ -1,0 +1,41 @@
+# ============================================================
+# R02 - Eventos
+# ------------------------------------------------------------
+#  [ ] Nombre: "R02 - Eventos"
+#  [ ] push SOLO en la rama feature/r02-eventos
+#  [ ] pull_request hacia main
+#  [ ] cron cada 15 minutos
+#  [ ] manual
+#  [ ] Job "mostrar" con un step que imprima "Me dispararon!"
+#
+# Lo lograste si: ves 2+ ejecuciones con eventos distintos
+# Preguntas de cierre:
+#  1. ¿Por qué el cron no corre estando solo en tu rama?
+#  2. Con un PR abierto, si haces push a la rama, ¿cuántas
+#     ejecuciones salen y por qué?
+# ============================================================
+
+
+name: "R02 - Eventos"
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - feature/r2-eventos
+  
+  pull_request:
+    branches:
+      - main
+  
+  schedule:
+    - cron: '*/15 * * * *'
+
+jobs:
+  mostrar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Disparo"
+        run: |
+          echo "Me dispararon!"
