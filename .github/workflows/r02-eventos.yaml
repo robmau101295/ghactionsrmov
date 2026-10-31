@@ -25,9 +25,9 @@ on:
     branches:
       - feature/r2-eventos
   
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
   
   # schedule:
   #   - cron: '*/15 * * * *'
