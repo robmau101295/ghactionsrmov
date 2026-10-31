@@ -1,0 +1,70 @@
+# ============================================================
+# R06 - Contextos
+# ------------------------------------------------------------
+#  [ ] Nombre "R06 - Contextos"
+#  [ ] push en tu rama + PR a main (abre/actualiza/cierra) + manual
+#  [ ] Job "info":
+#      [ ] 1. evento, actor, rama, commit, nro de ejecución
+#      [ ] 2. SO del runner: con contexto Y con variable de entorno
+#      [ ] 3. github.event completo en JSON
+#      [ ] 4. SOLO en PR: título del PR de forma SEGURA (env)
+#  [ ] Job "deploy-simulado": solo si PR cerrado Y mergeado
+#      imprime "Desplegando commit <sha>"
+# ============================================================
+
+name: R06 - Contextos
+
+on: 
+  push:
+    branches:
+      - feature/6-contextos
+  
+  pull_request:
+    types: [opened, synchronize, closed]
+    branches:
+      - main
+  
+  workflow_dispatch:
+
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Imprimir evento, actor, rama, commit y nro de ejecucion."
+        run: |
+          echo "Evento: ${{ github.event_name }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Rama: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Nro. Ejecicion: ${{ github.run_number }}"
+
+      - name: "SO del Runner, con contexto y con variable de entorno"
+        run: |
+          echo "Con contexto: ${{ runner.os }}"
+          echo "Con variable: $RUNNER-OS"
+      
+      - name: "github.event completo en JSON con ENV"
+        env: 
+          JSON_GH_EVENT: ${{ toJson(github.event) }}
+        run: |
+          echo "$JSON_GH_EVENT"
+      
+      - name: "github.event completo en JSON V1 sin ENV"
+        run: |
+          echo "${{ toJson(github.event) }}"
+      
+      - name: "SOLO en PR: título del PR de forma SEGURA (env)"
+        if: github.event.name == 'pull_request'
+        env: 
+          PR_TITTLE: ${{ github.event.pull_request.title }}
+        run: |
+         echo "PR_TITTLE: $PR_TITTLE"
+      
+  deploy-simulado:
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Desplegar commit"
+        run: |
+         echo "Commit Desplegado: ${{ github.sha }}"
+          
