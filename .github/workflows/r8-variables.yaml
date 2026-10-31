@@ -21,7 +21,7 @@ name: R08 - Variables
 on: 
   push: 
     branches:
-      - feature/r8-variables
+      - feature/8-variables
   
   workflow_dispatch:
 
