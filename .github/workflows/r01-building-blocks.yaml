@@ -29,13 +29,14 @@ jobs:
         run: echo "Hola mundo!"
       - name: Print date
         run: |
-        echo "Fecha: $(date)"
-        echo "Directorio: $PWD"
+          echo "Fecha: $(date)"
+          echo "Directorio: $PWD"
+
   despedida:
     runs-on: ubuntu-latest
     needs: saludo
-    steps: 
+    steps:
       - name: Adios
         run: |
-        echo "Adios"
+          echo "Adios"
 
