@@ -22,20 +22,20 @@ on:
       - feature/3-runners
     
 jobs:
-  windows:
+  linux:
     runs-on: ubuntu-latest 
     steps:
       - name: Imprimir Runner
         run: |
           echo "Estoy en $RUNNER_OS"
   mac:
-    runs-on: macos
+    runs-on: macos-latest
     steps:
       - name: Imprimir Runner
         run: |
           echo "Estoy en $RUNNER_OS"
-  linux:
-    runs-on: windows
+  windows:
+    runs-on: windows-latest
     steps:
       - name: Imprimir Runner
         run: |
