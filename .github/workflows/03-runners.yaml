@@ -40,3 +40,11 @@ jobs:
       - name: Imprimir Runner
         run: |
           echo "Estoy en $RUNNER_OS"
+
+  windows-bash:
+    runs-on: windows-latest
+    steps:
+      - name: Imprimir Runner
+        shell: bash
+        run: |
+          echo "Estoy en $RUNNER_OS"
