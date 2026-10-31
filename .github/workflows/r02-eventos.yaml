@@ -29,8 +29,8 @@ on:
     branches:
       - main
   
-  schedule:
-    - cron: '*/15 * * * *'
+  # schedule:
+  #   - cron: '*/15 * * * *'
 
 jobs:
   mostrar:
@@ -39,3 +39,4 @@ jobs:
       - name: "Disparo"
         run: |
           echo "Me dispararon!"
+#comentario de prueba
