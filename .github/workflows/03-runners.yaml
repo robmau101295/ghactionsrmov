@@ -1,0 +1,42 @@
+# ============================================================
+# R03 - Runners
+# ------------------------------------------------------------
+#  [ ] Nombre: "R03 - Runners", manual (+ push mientras pruebas)
+#  [ ] Jobs: linux, windows, mac (cada uno en su runner)
+#  [ ] Mismo step en los 3: echo "Estoy en: $RUNNER_OS"
+#  [ ] Observar qué pasa en windows
+#  [ ] Job windows-bash: mismo comando SIN cambiarlo, que funcione
+#
+# Preguntas de cierre:
+#  1. ¿Qué imprimió "windows" y por qué?
+#  2. Pipeline NestJS/Bun en Deuna: ¿qué runner y por qué?
+# ============================================================
+
+name: R03 - Runners
+
+on:
+  workflow_dispatch:
+  
+  push:
+    branches:
+      - feature/3-runners
+    
+jobs:
+  windows:
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Imprimir Runner
+        run: |
+          echo "Estoy en $RUNNER_OS"
+  mac:
+    runs-on: macos
+    steps:
+      - name: Imprimir Runner
+        run: |
+          echo "Estoy en $RUNNER_OS"
+  linux:
+    runs-on: windows
+    steps:
+      - name: Imprimir Runner
+        run: |
+          echo "Estoy en $RUNNER_OS"
