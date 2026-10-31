@@ -1,0 +1,69 @@
+# ============================================================
+# R08 - Variables
+# ------------------------------------------------------------
+# Antes: crear en Settings > Secrets and variables > Actions
+#   Variable ECR_REGISTRY = 123456789012.dkr.ecr.us-east-1.amazonaws.com
+#   Secret   TOKEN_FALSO  = (lo que quieras)
+#
+#  [ ] Nombre "R08 - Variables", push en tu rama + manual
+#  [ ] env workflow: APP_NAME=mi-app, AMBIENTE=dev
+#  [ ] Job "construir", env job: AMBIENTE=qa
+#      [ ] 1. imprimir APP_NAME y AMBIENTE
+#      [ ] 2. igual, con AMBIENTE=prod a nivel step
+#      [ ] 3. IMAGE_TAG = sha corto (7) -> disponible para siguientes
+#      [ ] 4. imprimir <ECR_REGISTRY>/<APP_NAME>:<IMAGE_TAG>
+#      [ ] 5. imprimir TOKEN_FALSO (ver qué sale)
+#  [ ] Job "otro": imprimir APP_NAME, AMBIENTE, IMAGE_TAG
+# ============================================================
+
+name: R08 - Variables
+
+on: 
+  push: 
+    branches:
+      - feature/8-variables
+  
+  workflow_dispatch:
+
+env:
+  APP_NAME: "mi-app"
+  AMBIENTE: "dev"
+
+jobs:
+  build:
+    env:
+      AMBIENTE: "qa"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "imprimir APP_NAME y AMBIENTE"
+        run: |
+          echo "APP_NAME: $APP_NAME"
+          echo "AMBIENTE: $AMBIENTE"
+      
+      - name: "AMBIENTE=prod a nivel step" 
+        env:
+          AMBIENTE: "prod" 
+        run: |
+          echo "APP_NAME: $APP_NAME"
+          echo "AMBIENTE: $AMBIENTE"
+      
+      - name: "IMAGE_TAG = sha corto (7) -> disponible para siguientes"
+        run: |
+          echo "IMAGE_TAG=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
+      - name: "imprimir <ECR_REGISTRY>/<APP_NAME>:<IMAGE_TAG>"
+        run: |
+          echo "${{vars.ECR_REGISTRY }}/$APP_NAME:$IMAGE_TAG"
+      
+      - name: "imprimir TOKEN_FALSO (ver qué sale)"
+        run: |
+          echo "${{ secrets.TOKEN_FALSO }}"
+  
+  otro:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "imprimir APP_NAME, AMBIENTE, IMAGE_TAG"
+        run: |
+          echo "APP_NAME: $APP_NAME"
+          echo "AMBIENTE: $AMBIENTE"
+          echo "IMAGE_TAG: $IMAGE_TAG"
