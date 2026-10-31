@@ -1,0 +1,42 @@
+# ============================================================
+# R01 - Bloques básicos (workflow, jobs, steps)
+# ------------------------------------------------------------
+# Requisitos:
+#  [ ] El workflow se llama "R01 - Bloques"
+#  [ ] Se ejecuta SOLO a mano desde la pestaña Actions
+#  [ ] Job "saludo" en Ubuntu con 2 steps:
+#      [ ] step de UNA línea que imprime un saludo
+#      [ ] step MULTILÍNEA que imprime la fecha y el directorio actual
+#  [ ] Job "despedida" que arranca SOLO cuando termina "saludo"
+#
+# Lo lograste si:
+#  - En Actions aparece el botón "Run workflow"
+#  - El grafo muestra saludo -> despedida en secuencia
+#  - En los logs se ven la fecha y el directorio
+#
+# Pregunta de cierre: ¿qué cambia si quitas la línea que hace
+# esperar a "despedida"?
+# ============================================================
+name: "R01 - Bloques"
+
+on: workflow_dispatch
+
+jobs:
+  saludo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hola Mundo
+        run: echo "Hola mundo!"
+      - name: Print date
+        run: |
+          echo "Fecha: $(date)"
+          echo "Directorio: $PWD"
+
+  despedida:
+    runs-on: ubuntu-latest
+    needs: saludo
+    steps:
+      - name: Adios
+        run: |
+          echo "Adios"
+
