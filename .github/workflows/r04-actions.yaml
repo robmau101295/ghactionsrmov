@@ -31,8 +31,9 @@ on:
 jobs: 
   build:
     runs-on: ubuntu-latest
-    default:
-      working-directory: 04-using-actions/react-app
+    defaults:
+      run:
+        working-directory: 04-using-actions/react-app
     steps:
       - name: Listar directorio
         working-directory: . 
