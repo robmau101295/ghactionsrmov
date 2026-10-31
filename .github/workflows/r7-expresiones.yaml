@@ -1,0 +1,52 @@
+# ============================================================
+# R07 - Expresiones
+# ------------------------------------------------------------
+#  [ ] Nombre "R07 - Expresiones"
+#  [ ] push en tu rama + PR a main + manual
+#  [ ] Job "calcular" con env ENTORNO a nivel de job:
+#        main -> prod | pull_request -> qa | resto -> dev
+#  [ ] 1. echo "Entorno: <ENTORNO>"
+#  [ ] 2. imprimir true/false: ¿es push? ¿run_number > 3?
+#  [ ] 3. solo si push O manual: "Disparo directo"
+#  [ ] 4. solo si ENTORNO != prod Y actor eres tú:
+#         "Despliegue permitido en <ENTORNO>"
+# ============================================================
+
+name: R07 - Expresiones
+
+on: 
+  push:
+    branches:
+      - feature/7-expresiones
+  
+  pull_request:
+    branches:
+      - main
+  
+  workflow_dispatch:
+
+jobs:
+  calcular:
+    env:
+      ENTORNO: ${{ github.ref_name == 'main' && 'prod' || github.event_name == 'pull_request' && 'qa' || 'dev'}}
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Imprimir Entorno"
+        run: |
+          echo "$ENTORNO"
+      
+      - name: "Imprimir true/false if rn > 3"
+        env:
+          RNUMBER: ${{ github.run_number > 3 }}
+        run: |
+          echo "$RNUMBER"
+      
+      - name: "Push o Manual"
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          echo "Disparo Directo!"
+      
+      - name: "ENVIRONMENT"
+        if: env.ENTORNO != 'prod' && github.actor == 'robmau101295'  
+        run: |
+          echo "Despliegue permitido en $ENTORNO"
