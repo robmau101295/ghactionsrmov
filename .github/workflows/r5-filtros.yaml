@@ -1,0 +1,32 @@
+# ============================================================
+# R05 - Filtros y tipos de actividad
+# ------------------------------------------------------------
+#  [ ] Nombre "R05 - Filtros"
+#  [ ] push: ramas feature/ (cualquier profundidad)
+#  [ ]       solo cambios en 04-using-actions/react-app/
+#  [ ]       pero NO si solo cambian .md
+#  [ ] pull_request a main: solo opened y closed
+#  [ ] Job "mostrar": echo "Filtro OK"
+# ============================================================
+
+name: "R05 - Filtros"
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+    paths:
+      - '04-using-actions/react-app/**'
+      - '!04-using-actions/react-app/**.md'
+  
+  pull_request:
+    types: [opened, closed]
+    branches:
+      - main
+
+jobs: 
+  mostrar:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Filtro OK"
