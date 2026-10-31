@@ -23,7 +23,7 @@ on:
 
   push:
     branches:
-      - feature/r02-eventos
+      - feature/r2-eventos
   
   pull_request:
     branches:
