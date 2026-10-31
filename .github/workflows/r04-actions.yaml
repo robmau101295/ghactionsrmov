@@ -1,0 +1,64 @@
+# ============================================================
+# R04 - Usar actions
+# ------------------------------------------------------------
+#  [ ] Nombre "R04 - Actions", manual + push en tu rama
+#  [ ] Job "build" en ubuntu-latest:
+#      [ ] 1. listar directorio (SIN checkout)
+#      [ ] 2. checkout con la action oficial
+#      [ ] 3. listar de nuevo
+#      [ ] 4. Node 20 con la action oficial
+#      [ ] 5. instalar deps con el comando que respeta el lock
+#      [ ] 6. tests
+#      [ ] 7. build
+#  [ ] 5-7 dentro de 04-using-actions/react-app SIN "cd" en cada step
+#
+# Preguntas de cierre:
+#  1. ¿uses vs run?
+#  2. ¿npm ci vs npm install en CI?
+#  3. ¿Qué es @v4 y por qué no @main?
+# ============================================================
+
+
+name: R04 - Actions
+
+on:
+  workflow_dispatch:
+  
+  push:
+    branches: 
+      - feature/4-actions
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest
+    default:
+      working-directory: 04-using-actions/react-app
+    steps:
+      - name: Listar directorio
+        working-directory: . 
+        run: |
+          ls -la
+      
+      - name: Checkout
+        uses: actions/checkout@v7
+      
+      - name: Listar de nuevo
+        run: |
+          ls -la
+      
+      - name: Instalar Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+        
+      - name: Instalar Deps
+        run: npm ci
+      
+      - name: Tests
+        run: npm test
+      
+      - name: build
+        run: npm run build
+
+
+      
